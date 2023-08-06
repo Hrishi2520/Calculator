@@ -3,35 +3,42 @@ package com.calculator.controller;
 import com.calculator.model.CalculatedResponse;
 import com.calculator.model.CalculatorRequest;
 import com.calculator.service.CalculatorService;
-import org.hibernate.validator.constraints.NotBlank;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * A simple arithmetic calculator supporting addition, subtraction, multiplication, and division for multiple numbers.
+ */
 @RestController
 public class CalculatorController {
     @Autowired
     private CalculatorService service;
 
     @PostMapping("/addition")
-    public CalculatedResponse add(@NotBlank @RequestBody CalculatorRequest request) {
-        return service.add(request.getNumbers());
+    public ResponseEntity<CalculatedResponse> add(@Valid @RequestBody CalculatorRequest request) {
+        CalculatedResponse calculatedResponse = service.add(request.getNumbers());
+        return ResponseEntity.status(HttpStatus.OK).body(calculatedResponse);
     }
 
     @PostMapping("/subtract")
-    public CalculatedResponse subtract(@NotBlank @RequestBody CalculatorRequest request) {
-        return service.subtract(request.getNumbers());
+    public ResponseEntity<CalculatedResponse> subtract(@Valid @RequestBody CalculatorRequest request) {
+        CalculatedResponse calculatedResponse = service.subtract(request.getNumbers());
+        return ResponseEntity.status(HttpStatus.OK).body(calculatedResponse);
     }
 
     @PostMapping("/multiply")
-    public CalculatedResponse multiply(@NotBlank @RequestBody CalculatorRequest request) {
-        return service.multiply(request.getNumbers());
+    public ResponseEntity<CalculatedResponse> multiply(@Valid @RequestBody CalculatorRequest request) {
+        CalculatedResponse calculatedResponse = service.multiply(request.getNumbers());
+        return ResponseEntity.status(HttpStatus.OK).body(calculatedResponse);
     }
 
     @PostMapping("/divide")
-    public CalculatedResponse divide(@NotBlank @RequestBody CalculatorRequest request) {
-        return service.divide(request.getNumbers());
+    public ResponseEntity<CalculatedResponse> divide(@Valid @RequestBody CalculatorRequest request) {
+        CalculatedResponse calculatedResponse = service.divide(request.getNumbers());
+        return ResponseEntity.status(HttpStatus.OK).body(calculatedResponse);
     }
 
 }
