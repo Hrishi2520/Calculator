@@ -50,7 +50,13 @@ public class CalculatorService {
      * Performs divide operation on the given List of BigInteger elements.
      */
     public CalculatedResponse divide(List<BigDecimal> numbers) {
-        if (numbers.size() != 2) return CalculatedResponse.builder().result(BigDecimal.ZERO).build();
+        BigDecimal divisor = numbers.get(1);
+        if (divisor.equals(BigDecimal.ZERO)) {
+            throw new IllegalArgumentException("Cannot perform division operation with zero");
+        } else if (numbers.size() != 2) {
+            return CalculatedResponse.builder().result(BigDecimal.ZERO).build();
+        }
+
         Optional<BigDecimal> optionalResult = numbers.stream().reduce(BigDecimal::divide);
         return CalculatedResponse.builder().result(optionalResult.orElse(BigDecimal.ZERO)).build();
     }
